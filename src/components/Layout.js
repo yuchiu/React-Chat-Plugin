@@ -1,12 +1,13 @@
 import React from 'react'
+import Widget from './containers/Widget'
 import '../styles/scss/styles.scss'
 
 class Layout extends React.Component {
 
   render() {
     return (
-      <div id="title">
-        My React Template
+      <div>
+        <Widget/>
       </div>
 
     )
