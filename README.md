@@ -9,7 +9,7 @@ Hot loading enabled, CSS postfixer and prefixer enabled, ready to run on localho
 npm i -g cross-env
 
 ```
-Ensure scripts works across Linux, Windows, and all environments.
+Ensure npm scripts works across Linux, Windows, and all environments.
 
 #### 2. install everything else
 
