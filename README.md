@@ -2,6 +2,8 @@
 
 Portable Real-time React Redux Chat Plugin using firebase.
 
+Chats from different location(window.locaiton.ref) will be store as different object in database. The location reference is encoded.
+
 View the live demo on this [link](https://chat-plugin.surge.sh)
 
 **********************
