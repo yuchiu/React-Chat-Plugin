@@ -2,6 +2,8 @@
 
 Portable Real-time React Redux Chat Plugin using firebase.
 
+View the live demo on this [link](https://chat-plugin.surge.sh)
+
 **********************
 
 
