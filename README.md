@@ -1,4 +1,4 @@
-# My React Template
+# React Chat Plugin
 
 Hot loading enabled, CSS postfixer and prefixer enabled, ready to run on localhost.
 
