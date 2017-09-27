@@ -12,41 +12,17 @@ class Widget extends React.Component {
     super()
     this.state = {
       showComments: false,
-      comments: [],
-      firebase: null
+      // firebase: null
     }
   }
 
   componentDidMount() {
-    const fbApp = firebase.initializeApp({
-      apiKey: "AIzaSyCInPa7aF1jnJQ6rkWpnm_8AKPi-iO70DU",
-      authDomain: "react-chat-app-caf05.firebaseapp.com",
-      databaseURL: "https://react-chat-app-caf05.firebaseio.com",
-      projectId: "react-chat-app-caf05",
-      storageBucket: "react-chat-app-caf05.appspot.com",
-      messagingSenderId: "703234059280"
-    })
-    this.setState({firebase: fbApp})
-    const path = Base64.encode(window.location.href) + '/comments'
+      this.props.fetchComments()
 
-    fbApp
-      .database()
-      .ref(path)
-      .on('value', (snapshot) => {
-        const data = snapshot.val()
-        console.log('comments updated' + JSON.stringify(data))
-
-        if (data == null) {
-          return
-        }
-        this.setState({
-          comments: data.reverse()
-        })
-      })
   }
 
   toggleComments() {
-    console.log('toggle' + this.state.showComments)
+    console.log('inside toggleComments '+this.props.comments.comments )
     this.setState({
       showComments: !this.state.showComments
     })
@@ -56,23 +32,25 @@ class Widget extends React.Component {
     if (e.keyCode != 13) {
       return
     }
-
-    const comment = {
+        const comment = {
       text: e.target.value,
       timestamp: Date.now()
     }
-    let comments = Object.assign([], this.state.comments)
+    this.props.submitComment(comment)
 
-    const path = Base64.encode(window.location.href) + '/comments/' + comments.length
+    // let comments = Object.assign([], this.state.comments)
 
-    this
-      .state
-      .firebase
-      .database()
-      .ref(path)
-      .set(comment)
+    // const path = Base64.encode(window.location.href) + '/comments/' + comments.length
+
+    // this
+    //   .state
+    //   .firebase
+    //   .database()
+    //   .ref(path)
+    //   .set(comment)
     e.target.value = ''
 
+    this.props.submitComment('dasasdds')
   }
 
   render() {
@@ -88,11 +66,7 @@ class Widget extends React.Component {
               placeholder="Enter Comment"
               style={style.input}/>
           </div>
-
-          {this
-            .state
-            .comments
-            .map((comment, i) => {
+          {this.props.comments.comments.map((comment, i) => {
               return < Comment key = {
                 i
               }
@@ -143,6 +117,9 @@ const dispatchToProps = (dispatch)=>{
   return{
     submitComment : (newComment)=>{
       dispatch(actions.submitComment(newComment))
+    },
+    fetchComments : ()=>{
+      dispatch(actions.fetchComments())
     }
   }
 

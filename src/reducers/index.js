@@ -1,4 +1,4 @@
-import commentsReuducer from './commentsReducer'
+import commentsReducer from './commentsReducer'
 
 
 export{

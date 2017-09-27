@@ -4,7 +4,8 @@ Portable React Chat Plugin using firebase.
 
 **********************
 
-### Usage as CDN
+
+### Use as CDN
 
 #### 1. make a div with id of "root"
 
@@ -20,6 +21,9 @@ Portable React Chat Plugin using firebase.
 ```
 
 **********************
+
+
+### Usage with an example site that I set up(a bloomberg news page with the chat plugin)
 
 #### 1. First install package cross-env globally
 
