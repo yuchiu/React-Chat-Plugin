@@ -35,4 +35,4 @@ production environment, run webpack
 npm run build
 
 ```
-The bundle files including the output html file will be store in dist directory.
+The minified JS bundle files including the output html file will be store in dist directory.
