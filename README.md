@@ -1,6 +1,6 @@
-# React Chat Plugin
+# React Redux Chat Plugin
 
-Portable React Chat Plugin using firebase.
+Portable Real-time React Redux Chat Plugin using firebase.
 
 **********************
 
@@ -13,7 +13,7 @@ Portable React Chat Plugin using firebase.
 <div id="root"></div>
 
 ```
-#### 2. import the script from the CDN link
+#### 2. include the script for the CDN link
 
 ```
 <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/react-chat-app-caf05.appspot.com/o/app.bundle.js?alt=media&token=aa194153-fea4-42a3-a4a1-25719bd66c95"></script>
@@ -23,7 +23,7 @@ Portable React Chat Plugin using firebase.
 **********************
 
 
-### Usage with an example site that I set up(a bloomberg news page with the chat plugin)
+### Usage with an example site that I set up(a news page with the chat plugin)
 
 #### 1. First install package cross-env globally
 

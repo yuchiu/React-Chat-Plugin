@@ -11,18 +11,17 @@ class Widget extends React.Component {
   constructor() {
     super()
     this.state = {
-      showComments: false,
-      // firebase: null
+      showComments: false
     }
   }
 
   componentDidMount() {
-      this.props.fetchComments()
-
+    this
+      .props
+      .fetchComments()
   }
 
   toggleComments() {
-    console.log('inside toggleComments '+this.props.comments.comments )
     this.setState({
       showComments: !this.state.showComments
     })
@@ -32,25 +31,14 @@ class Widget extends React.Component {
     if (e.keyCode != 13) {
       return
     }
-        const comment = {
+    const newComment = {
       text: e.target.value,
       timestamp: Date.now()
     }
-    this.props.submitComment(comment)
-
-    // let comments = Object.assign([], this.state.comments)
-
-    // const path = Base64.encode(window.location.href) + '/comments/' + comments.length
-
-    // this
-    //   .state
-    //   .firebase
-    //   .database()
-    //   .ref(path)
-    //   .set(comment)
+    this
+      .props
+      .fetchSubmit(newComment, this.props.comments.comments.length)
     e.target.value = ''
-
-    this.props.submitComment('dasasdds')
   }
 
   render() {
@@ -66,7 +54,11 @@ class Widget extends React.Component {
               placeholder="Enter Comment"
               style={style.input}/>
           </div>
-          {this.props.comments.comments.map((comment, i) => {
+          {this
+            .props
+            .comments
+            .comments
+            .map((comment, i) => {
               return < Comment key = {
                 i
               }
@@ -75,12 +67,16 @@ class Widget extends React.Component {
               } />
           })}
 
-          <ToggleBar label= 'Hide Comments'onToggle={this
+          <ToggleBar
+            label='Hide Comments'
+            onToggle={this
             .toggleComments
             .bind(this)}/>
         </div>
       )
-    return (<ToggleBar  label = 'Show Comments'onToggle={this
+    return (<ToggleBar
+      label='Show Comments'
+      onToggle={this
       .toggleComments
       .bind(this)}/>)
   }
@@ -102,29 +98,23 @@ const style = {
     height: 36,
     padding: 9,
     width: '100%',
-    border:'none',
+    border: 'none',
     borderBottom: '1px solid #ddd'
   }
 }
 
-const stateToProps = (state)=>{
-    return {
-      comments : state.comments
-    }
+const stateToProps = (state) => {
+  return {comments: state.comments}
 }
 
-const dispatchToProps = (dispatch)=>{
-  return{
-    submitComment : (newComment)=>{
-      dispatch(actions.submitComment(newComment))
+const dispatchToProps = (dispatch) => {
+  return {
+    fetchSubmit: (newComment, length) => {
+      dispatch(actions.fetchSubmit(newComment, length))
     },
-    fetchComments : ()=>{
+    fetchComments: () => {
       dispatch(actions.fetchComments())
     }
   }
-
 }
-
-
-
 export default connect(stateToProps, dispatchToProps)(Widget);

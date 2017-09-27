@@ -1,6 +1,3 @@
 export default{
-
-    SUBMIT_COMMENT : 'SUBMIT_COMMENT',
-    
     FETCH_COMMENTS : 'FETCH_COMMENTS'
 }

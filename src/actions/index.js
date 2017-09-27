@@ -4,7 +4,6 @@ import {
     Base64
 } from 'js-base64'
 
-
 const fbApp = firebase.initializeApp({
     apiKey: "AIzaSyCInPa7aF1jnJQ6rkWpnm_8AKPi-iO70DU",
     authDomain: "react-chat-app-caf05.firebaseapp.com",
@@ -13,30 +12,19 @@ const fbApp = firebase.initializeApp({
     storageBucket: "react-chat-app-caf05.appspot.com",
     messagingSenderId: "703234059280"
 })
-
 const path = Base64.encode(window.location.href) + '/comments'
 
-    // let comments = Object.assign([], this.state.comments)
+let actions = {
 
-    // const path = Base64.encode(window.location.href) + '/comments/' + comments.length
+    fetchSubmit: (newComment, length) => {
+        return (dispatch) => {
 
-    // this
-    //   .state
-    //   .firebase
-    //   .database()
-    //   .ref(path)
-    //   .set(comment)
+            fbApp
+                .database()
+                .ref(path + '/' + length)
+                .set(newComment)
 
-
-export default {
-
-    submitComment: (newComment) => {
-        return (dispatch)=>{
-            
-            dispatch({
-                type: constants.SUBMIT_COMMENT,
-                payload: newComment
-            })
+            dispatch(actions.fetchComments({}))
         }
     },
     fetchComments: () => {
@@ -52,7 +40,7 @@ export default {
                     }
                     dispatch({
                         type: constants.FETCH_COMMENTS,
-                        payload:  data.reverse()
+                        payload: data.reverse()
                     })
                 })
 
@@ -60,3 +48,4 @@ export default {
     }
 
 }
+export default actions
