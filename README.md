@@ -1,15 +1,15 @@
 # React Chat Plugin
 
-Portable React Chat Plugin 
+Portable React Chat Plugin using firebase.
 
 **********************
 
 ### Usage as CDN
 
-#### 1. make a div with id of "chat-plugin"
+#### 1. make a div with id of "root"
 
 ```
-<div id="chat-plugin"></div>
+<div id="root"></div>
 
 ```
 #### 2. import the script from the CDN link

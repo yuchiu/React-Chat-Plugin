@@ -4,6 +4,9 @@ import Comment from '../presentation/Comment'
 import firebase from 'firebase'
 import {Base64} from 'js-base64'
 
+import actions from '../../actions'
+import {connect} from 'react-redux'
+
 class Widget extends React.Component {
   constructor() {
     super()
@@ -129,4 +132,22 @@ const style = {
     borderBottom: '1px solid #ddd'
   }
 }
-export default Widget;
+
+const stateToProps = (state)=>{
+    return {
+      comments : state.comments
+    }
+}
+
+const dispatchToProps = (dispatch)=>{
+  return{
+    submitComment : (newComment)=>{
+      dispatch(actions.submitComment(newComment))
+    }
+  }
+
+}
+
+
+
+export default connect(stateToProps, dispatchToProps)(Widget);
