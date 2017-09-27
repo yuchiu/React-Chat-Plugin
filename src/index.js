@@ -7,4 +7,4 @@ const app = (
     <Layout/>
 )
 
-ReactDOM.render(app, document.getElementById('root'))
+ReactDOM.render(app, document.getElementById('chat-plugin'))
