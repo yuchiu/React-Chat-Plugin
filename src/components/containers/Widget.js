@@ -1,29 +1,45 @@
 import React from 'react'
 import {ToggleBar} from '../presentation'
 import Comment from '../presentation/Comment'
+import firebase from 'firebase'
+import {Base64} from 'js-base64'
 
 class Widget extends React.Component {
   constructor() {
     super()
     this.state = {
       showComments: false,
-      comments: []
+      comments: [],
+      firebase: null
     }
   }
-  submitComment(e) {
-    if (e.keyCode != 13) {
-      return
-    }
-    const comment = {
-      text: e.target.value,
-      timestamp: Math.round(Date.now() / 1000)
-    }
-    console.log(comment)
-    let comments = Object.assign([], this.state.comments)
-    comments.push(comment)
-    console.log(comments)
-    this.setState({comments: comments})
-    e.target.value = '' //clear input
+
+  componentDidMount() {
+    const fbApp = firebase.initializeApp({
+      apiKey: "AIzaSyCInPa7aF1jnJQ6rkWpnm_8AKPi-iO70DU",
+      authDomain: "react-chat-app-caf05.firebaseapp.com",
+      databaseURL: "https://react-chat-app-caf05.firebaseio.com",
+      projectId: "react-chat-app-caf05",
+      storageBucket: "react-chat-app-caf05.appspot.com",
+      messagingSenderId: "703234059280"
+    })
+    this.setState({firebase: fbApp})
+    const path = Base64.encode(window.location.href) + '/comments'
+
+    fbApp
+      .database()
+      .ref(path)
+      .on('value', (snapshot) => {
+        const data = snapshot.val()
+        console.log('comments updated' + JSON.stringify(data))
+
+        if (data == null) {
+          return
+        }
+        this.setState({
+          comments: data.reverse()
+        })
+      })
   }
 
   toggleComments() {
@@ -31,6 +47,29 @@ class Widget extends React.Component {
     this.setState({
       showComments: !this.state.showComments
     })
+  }
+
+  submitComment(e) {
+    if (e.keyCode != 13) {
+      return
+    }
+
+    const comment = {
+      text: e.target.value,
+      timestamp: Date.now()
+    }
+    let comments = Object.assign([], this.state.comments)
+
+    const path = Base64.encode(window.location.href) + '/comments/' + comments.length
+
+    this
+      .state
+      .firebase
+      .database()
+      .ref(path)
+      .set(comment)
+    e.target.value = ''
+
   }
 
   render() {
@@ -52,19 +91,19 @@ class Widget extends React.Component {
             .comments
             .map((comment, i) => {
               return < Comment key = {
-                comment.timestamp
+                i
               }
               {
                 ...comment
               } />
           })}
 
-          <ToggleBar onToggle={this
+          <ToggleBar label= 'Hide Comments'onToggle={this
             .toggleComments
             .bind(this)}/>
         </div>
       )
-    return (<ToggleBar onToggle={this
+    return (<ToggleBar  label = 'Show Comments'onToggle={this
       .toggleComments
       .bind(this)}/>)
   }
@@ -72,19 +111,22 @@ class Widget extends React.Component {
 const style = {
   comments: {
     zIndex: 100,
-    width: 333,
     height: '100%',
+    width: 333,
     position: 'fixed',
     top: 0,
     right: 0,
-    background: 'grey'
+    background: '#eaf2ff',
+    borderLeft: '2px solid grey',
+    overflowY: 'scroll',
+    paddingBottom: 64
   },
   input: {
-    height: 32,
-    padding: 5,
-    width: 100 + '%',
-    position: 'fixed',
-    bottom: 30
+    height: 36,
+    padding: 9,
+    width: '100%',
+    border:'none',
+    borderBottom: '1px solid #ddd'
   }
 }
 export default Widget;
